@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Link Hover Preview",
+  "version": "1.0.0",
+  "description": "Hover a link for a moment to see a popup preview of the page.",
+  "permissions": ["storage", "declarativeNetRequest"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Link Hover Preview settings",
+    "default_popup": "options.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  }
+}
