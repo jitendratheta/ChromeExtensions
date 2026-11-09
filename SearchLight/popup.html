@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --bg: #1e1e2e; --bg2: #27273a; --fg: #cdd6f4; --dim: #6c7086;
+    --cyan: #89dceb; --accent: #cba6f7; --sel: #313244; --green: #a6e3a1;
+  }
+  :root[data-theme="light"] {
+    --bg: #f5f5fa; --bg2: #e4e4ef; --fg: #2e2e3e; --dim: #8a8a9a;
+    --cyan: #0e7490; --accent: #7c3aed; --sel: #e4e4ef; --green: #15803d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 100vw; height: 100vh; background: var(--bg); color: var(--fg);
+    font: 13px/1.45 "SF Mono", Menlo, monospace; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  #bar { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--sel); }
+  #prompt { color: var(--accent); }
+  #q {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: var(--fg); font: inherit;
+  }
+  #tabs { display: flex; gap: 4px; }
+  .tab {
+    padding: 2px 8px; border-radius: 4px; color: var(--dim); cursor: pointer;
+    border: 1px solid transparent; user-select: none;
+  }
+  .tab.on { color: var(--accent); border-color: var(--accent); }
+  #list { overflow-y: auto; flex: 1; }
+  .row { display: flex; align-items: center; gap: 8px; padding: 4px 12px; cursor: pointer; white-space: nowrap; }
+  .row.sel { background: var(--sel); }
+  .row.picked .mark { color: var(--green); }
+  .num { flex: none; width: 12px; text-align: right; color: var(--green); font-size: 11px; }
+  .mark { flex: none; width: 6px; color: transparent; }
+  .row img { width: 16px; height: 16px; flex: none; }
+  .kind { flex: none; min-width: 42px; letter-spacing: 1px; }
+  .kind i { font-style: normal; }
+  .kind .k-b { color: var(--accent); } .kind .k-h { color: var(--dim); } .kind .k-t { color: var(--green); }
+  .title { flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; }
+  .title b, .path b, .url b { color: var(--accent); font-weight: 700; }
+  .path { color: var(--dim); flex: none; max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+  .url { color: var(--cyan); opacity: .75; flex: 1; overflow: hidden; text-overflow: ellipsis; }
+  .age { flex: none; min-width: 34px; text-align: right; color: var(--dim); font-size: 11px; }
+  #status { padding: 6px 12px; color: var(--dim); border-top: 1px solid var(--sel); display: flex; justify-content: space-between; }
+  #status a { color: var(--accent); text-decoration: none; }
+  kbd { color: var(--fg); background: var(--bg2); padding: 0 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+  <div id="bar">
+    <span id="prompt">&gt;</span>
+    <input id="q" placeholder="fuzzy search…">
+    <div id="tabs">
+      <span class="tab on" data-k="all">all</span>
+      <span class="tab" data-k="h">history</span>
+      <span class="tab" data-k="b">bookmarks</span>
+    </div>
+  </div>
+  <div id="list"></div>
+  <div id="status">
+    <span id="count"></span>
+    <span><kbd>↑↓</kbd> move <kbd>←→</kbd> tabs <kbd>⌘[1-9]</kbd> open № <kbd>tab</kbd> multi <kbd>⏎</kbd> open <kbd>⌥⏎</kbd> organize</span>
+  </div>
+  <script src="fzf.umd.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

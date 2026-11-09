@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Searchlight — Bookmark & History Search + Organizer",
+  "version": "2.0.0",
+  "description": "fzf-style fuzzy search over bookmarks and history, plus content-based bookmark reorganization with background analysis",
+  "permissions": [
+    "bookmarks",
+    "history",
+    "favicon",
+    "tabs",
+    "scripting",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    { "resources": ["popup.html", "bookmark.html"], "matches": ["<all_urls>"] }
+  ],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_title": "Search bookmarks & history (Cmd+K)"
+  },
+  "commands": {
+    "open-search": {
+      "suggested_key": { "default": "Ctrl+K", "mac": "Command+K" },
+      "description": "Open Searchlight"
+    },
+    "bookmark-tab": {
+      "suggested_key": { "default": "Ctrl+B", "mac": "Command+B" },
+      "description": "Bookmark current tab (searchable folder picker)"
+    }
+  },
+  "options_page": "organize.html",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

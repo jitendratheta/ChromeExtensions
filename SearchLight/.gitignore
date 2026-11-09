@@ -1,0 +1,4 @@
+*.pem
+*.crx
+key.pem
+.DS_Store

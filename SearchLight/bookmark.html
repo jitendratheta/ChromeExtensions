@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --bg: #1e1e2e; --bg2: #27273a; --fg: #cdd6f4; --dim: #6c7086;
+    --cyan: #89dceb; --accent: #cba6f7; --sel: #313244; --green: #a6e3a1;
+  }
+  :root[data-theme="light"] {
+    --bg: #f5f5fa; --bg2: #e4e4ef; --fg: #2e2e3e; --dim: #8a8a9a;
+    --cyan: #0e7490; --accent: #7c3aed; --sel: #e4e4ef; --green: #15803d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 100vw; height: 100vh; background: var(--bg); color: var(--fg);
+    font: 13px/1.45 "SF Mono", Menlo, monospace; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  #head { padding: 12px 14px 8px; border-bottom: 1px solid var(--sel); }
+  #title-row { display: flex; align-items: center; gap: 8px; }
+  #title-row img { width: 16px; height: 16px; flex: none; }
+  #title {
+    flex: 1; background: var(--bg2); border: 1px solid var(--sel); border-radius: 6px;
+    padding: 5px 8px; color: var(--fg); font: inherit; outline: none;
+  }
+  #title:focus { border-color: var(--accent); }
+  #url { color: var(--cyan); opacity: .6; font-size: 11px; margin-top: 6px;
+         white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #note { color: var(--green); font-size: 11px; margin-top: 4px; display: none; }
+
+  #bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; }
+  #prompt { color: var(--accent); }
+  #q { flex: 1; background: transparent; border: none; outline: none; color: var(--fg); font: inherit; }
+  #newfolder {
+    flex: none; background: transparent; color: var(--dim); border: 1px solid var(--sel);
+    border-radius: 6px; padding: 2px 8px; font: inherit; cursor: pointer;
+  }
+  #newfolder:hover { color: var(--green); border-color: var(--green); }
+  #createbar {
+    display: none; padding: 4px 14px; color: var(--green); font-size: 12px;
+    border-bottom: 1px solid var(--sel);
+  }
+
+  #list { overflow-y: auto; flex: 1; }
+  .row { display: flex; align-items: center; gap: 8px; padding: 4px 14px; cursor: pointer; white-space: nowrap; }
+  .row.sel { background: var(--sel); }
+  .row .path { overflow: hidden; text-overflow: ellipsis; }
+  .row .path b { color: var(--accent); font-weight: 700; }
+  .row .badge { color: var(--green); font-size: 11px; flex: none; }
+  .row.create .path { color: var(--green); }
+  #status { padding: 6px 14px; color: var(--dim); border-top: 1px solid var(--sel); }
+  kbd { color: var(--fg); background: var(--bg2); padding: 0 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+  <div id="head">
+    <div id="title-row">
+      <img id="fav" alt="">
+      <input id="title" placeholder="bookmark name">
+    </div>
+    <div id="url"></div>
+    <div id="note"></div>
+  </div>
+  <div id="bar">
+    <span id="prompt">📁&gt;</span>
+    <input id="q" placeholder="fuzzy search folder…">
+    <button id="newfolder" title="Create a new folder (uses the typed text as its name)">➕</button>
+  </div>
+  <div id="createbar"></div>
+  <div id="list"></div>
+  <div id="status"><kbd>↑↓</kbd> move <kbd>⏎</kbd> save <kbd>esc</kbd> cancel · name is editable above</div>
+  <script src="fzf.umd.js"></script>
+  <script src="bookmark.js"></script>
+</body>
+</html>
